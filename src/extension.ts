@@ -1,27 +1,54 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+const comboThreshold = 20;
+const timeThreshold = 1.5;
+
+const words:string[] = [
+	'いいぞ〜',
+	'いいぞいいぞ',
+	'ふむふむ',
+	'こういうの結構難しいんだよな',
+	'いいじゃないか',
+	'そういうことだよな',
+	'うんうん',
+	'こういうのでいいんだよ',
+	'大正解だ',
+	'問答無用のうまさだなあ',
+	'素晴らしい',
+	'良いセンスしてるなあ',
+	'これは良い',
+	'心憎いなぁ',
+	'うますぎる',
+	'最高だ',
+];
+
+let combo = 0;
+let lastTime = new Date().getTime();
+
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "inogashiramode" is now active!');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('inogashiramode.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
+    vscode.workspace.onDidChangeTextDocument(event => {
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from InogashiraMode!');
-	});
+		let nowTime = new Date().getTime();
+		var diffTime = nowTime - lastTime;
 
-	context.subscriptions.push(disposable);
+		if (diffTime / 1000 < timeThreshold){
+			combo++;
+
+			if(combo % comboThreshold === 0){
+				vscode.window.showInformationMessage(words[Math.floor(Math.random() * words.length)]);
+			}
+		} else {
+			combo = 0;
+		}
+
+		lastTime = nowTime;
+
+	}, null, context.subscriptions);
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+	console.log('"inogashiramode" is now deactive! Thank you for using!');
+}

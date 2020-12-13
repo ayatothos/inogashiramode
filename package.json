@@ -10,16 +10,10 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:inogashiramode.helloWorld"
+		"*"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [
-			{
-				"command": "inogashiramode.helloWorld",
-				"title": "Hello World"
-			}
-		]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
