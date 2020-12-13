@@ -1,7 +1,8 @@
 {
 	"name": "inogashiramode",
+    "publisher": "ayatothos",
 	"displayName": "InogashiraMode",
-	"description": "",
+	"description": "Make your typing experience happy",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.52.0"
